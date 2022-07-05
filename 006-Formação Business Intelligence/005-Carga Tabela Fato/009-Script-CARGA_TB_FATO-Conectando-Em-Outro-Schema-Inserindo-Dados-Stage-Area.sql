@@ -12,7 +12,7 @@ truncate fato_venda;
 -- PASSO 2: INSERIR DADOS NA FATO
 INSERT INTO FATO_VENDA(SK_DATA, SK_CLIENTE, QTD_VENDA, VL_VENDA_UNI, VL_VENDA_TOTAL)
 SELECT to_number(to_char(dt_venda, 'YYYYMMDD'), '99999999') as dt_venda,
-  (SELECT sk_cliente
+  (SELECT coalesce (sk_cliente, -1)
    FROM dim_cliente) AS sk_cliente,
        qtd_vendida,
        vl_vendido,
@@ -21,7 +21,7 @@ FROM
    (SELECT *
     FROM dblink('host=localhost user=dw_biacademy password=dw_biacademy dbname=st_biacademy', 'select * from st_venda ') 
          tabela (dt_venda date, cd_venda integer, cd_produto varchar, qtd_vendida integer, vl_vendido numeric, cd_cliente varchar, status_venda varchar)) tab_fato
-INNER JOIN dim_cliente ON dim_cliente.nk_cliente = tab_fato.cd_cliente;
+left JOIN dim_cliente ON dim_cliente.nk_cliente = tab_fato.cd_cliente;
 
 
 
