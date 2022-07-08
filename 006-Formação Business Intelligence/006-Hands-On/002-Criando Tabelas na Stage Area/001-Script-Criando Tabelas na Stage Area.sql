@@ -29,4 +29,11 @@ create table ST_VENDA(
 	DT_CARGA TIMESTAMP not null
 );
 
+-- CRIANDO VIEW VENDAS NA STAGE AREA PARA OS DADOS SEREM INSERIDOS NA FATO VENDAS
+ create view vw_st_venda as
+	 select dt_venda, cod_cliente, cod_produto, qtd_venda, vl_venda, qtd_venda * vl_venda as vl_venda_total 
+	 from st_venda ;
+	
 
+-- VALIDANDO VIEW VENDAS
+select * from vw_st_venda;

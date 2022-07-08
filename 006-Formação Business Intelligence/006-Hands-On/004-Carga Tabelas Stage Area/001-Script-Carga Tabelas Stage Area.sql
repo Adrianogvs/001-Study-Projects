@@ -45,7 +45,12 @@ create view VW_ITENS_PEDIDO_PEDIDO as
 select 	*
 from VW_ITENS_PEDIDO_PEDIDO;
 	
--- INSERT NA STAGE ST_CLIENTE
+
+-- TRUNCANDO A STAGE AREA ST_VENDA
+truncate ST_VENDA cascade;
+
+
+-- INSERT NA STAGE ST_VENDA
 INSERT INTO ST_VENDA
 	SELECT data_pedido,
 	       numero_pedido,

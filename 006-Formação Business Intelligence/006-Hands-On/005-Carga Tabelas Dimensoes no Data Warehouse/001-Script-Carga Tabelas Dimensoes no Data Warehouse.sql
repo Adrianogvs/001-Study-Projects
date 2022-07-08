@@ -49,7 +49,7 @@ set LC_MESSAGES = 'PT_BR.UTF8';
 
 
 -- CRIAR FUNÇÃO PARA TRAZER A MENOR DATA NA TABELA PEDIDO DO LEGADO
-CREATE FUNCTION min_data() returns DATE AS  $$
+CREATE FUNCTION fc_min_data() returns DATE AS  $$
   DECLARE
     primeiro_dia DATE;
   BEGIN
@@ -62,7 +62,7 @@ CREATE FUNCTION min_data() returns DATE AS  $$
 
 
 -- CRIAR FUNÇÃO PARA BUSCAR A ULTIMA DATA LANÇADA NA TABELA PEDIDO DO LEGADO
-CREATE FUNCTION numero_dias() returns INTEGER AS  $$
+CREATE FUNCTION fc_numero_dias() returns INTEGER AS  $$
   DECLARE
     nr INTEGER;
   BEGIN
