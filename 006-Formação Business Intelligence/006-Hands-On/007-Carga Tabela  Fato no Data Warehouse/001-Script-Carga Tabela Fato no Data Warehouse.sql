@@ -4,16 +4,21 @@
 -- Para fazer os jons deve-se usar o dblink, em que deve-se estar conectado na ST e referenciado o DW
 -- Vamos usar a VIEW vw_st_venda e left join dblink com as Dimensões Cliente e Produto.
 
--- Após criar o Script para carregar a fato, deve- se ir na Tabela Dimensão Cliente e criar o Cliente com código "-1", pois se não fizer isso, irá apresentar o seguinte erro:
+-- Após criar o Script para carregar a fato, deve- se ir na Tabela Dimensão Cliente e Dimensão Produto e criar o Cliente com código "-1" e Código do Produto -2, pois se não fizer isso, irá apresentar o seguinte erro:
 /*
 SQL Error [23503]: ERROR: insert or update on table "fato_venda" violates foreign key constraint "fato_venda_dim_cliente_fk"
   Detail: Key (sk_cliente)=(-1) is not present in table "dim_cliente".
 */
 -- Esse erro informa que não existem nenhum cliente de código “-1” cadastrado na Tabela Dimensão Cliente, então é necessário criar esse cliente antes de fazer o INSERT na Fato Venda.
+-- Essa técnica deve ser utilizada em todas as Dimensões.
 
 -- INSERINDO O CLIENTE "-1" NA DIMENSÃO CLIENTE
 insert into dim_cliente 
 values (-1, '**Não Identificado**','**Não Identificado**','**Não Identificado**', current_date);
+
+-- INSERINDO O CLIENTE "-2" NA DIMENSÃO CLIENTE
+insert into dim_cliente 
+values (-2, '**Não Se Aplica**','**Não Se Aplica**','**Não Se Aplica**', current_date);
                
 -- VALIDANDO OS DADOS DIMENSÃO CLIENTE
 select * from dim_cliente dc ;
@@ -22,6 +27,10 @@ select * from dim_cliente dc ;
 -- INSERINDO O CLIENTE "-1" NA DIMENSÃO PRODUTO
 insert into dim_produto 
 values (-1, '**Não Identificado**','**Não Identificado**','**Não Identificado**', -1,'**Não Identificado**', current_date);
+
+-- INSERINDO O CLIENTE "-2" NA DIMENSÃO PRODUTO
+insert into dim_produto 
+values (-2,  '**Não Se Aplica**','**Não Se Aplica**','**Não Se Aplica**', -1,'**Não Se Aplica**', current_date);
           
 -- VALIDANDO OS DADOS DIMENSAO PRODUTO
 select * from dim_produto dp ;
@@ -59,4 +68,6 @@ from fato_venda
 				dim_data.nm_mes,
 				dim_data.nr_mes
 	order by dim_data.nr_mes ;
+
+select * from fato_venda fv ;
 
